@@ -65,13 +65,13 @@ spec:
             cpu: {{ .Values.cpuLimit | quote }}
             memory: {{ .Values.memoryLimit | quote }}
         readinessProbe:
-          tcpSocket:
+          failureThreshold: 3
+          httpGet:
+            path: /ping
             port: 80
-          failureThreshold: 1
-          initialDelaySeconds: 10
           periodSeconds: 10
           successThreshold: 1
-          timeoutSeconds: 2
+          timeoutSeconds: 1
         livenessProbe:
           tcpSocket:
             port: 80
