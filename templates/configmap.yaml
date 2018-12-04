@@ -9,6 +9,10 @@ metadata:
     heritage: {{ .Release.Service | quote }}
 data:
   traefik.toml: |
+    [ping]
+    entryPoint = "ping"
+    
+    
     # traefik.toml
     {{- if .Values.debug.enabled }}
     debug = true
@@ -30,7 +34,10 @@ data:
     defaultEntryPoints = ["http", "httpn"]
     {{- end }}
     [entryPoints]
-      [entryPoints.http]
+      [entryPoints.ping]
+      address = ":8082"
+         
+      [entryPoints.http]    
       address = ":80"
       compress = {{ .Values.gzip.enabled }}
       {{- if .Values.whiteListSourceRange }}
